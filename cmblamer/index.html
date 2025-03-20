@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <link rel="stylesheet" id="dynamic-stylesheet" href="">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/scripts/script.js"></script>
+    <title>CMBlâmer</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Demande de Procès</h2>
+        <form id="trialForm">
+            <label for="defense">Défense<span style="color: red;">*</span></label>
+            <input type="text" id="defense" style="text-transform: uppercase;" required>
+
+            <label for="prosecution">Accusé(e)<span style="color: red;">*</span></label>
+            <input type="text" id="prosecution" style="text-transform: uppercase;" required>
+
+            <label for="judge">Juge<span style="color: red;">*</span></label>
+            <input type="text" id="judge" style="text-transform: uppercase;" required>
+
+            <label for="jury">Jury souhaité</label>
+            <input type="checkbox" id="jury">
+
+            <label for="details">Détails de l'affaire<span style="color: red;">*</span></label>
+            <textarea id="details" rows="5" required></textarea>
+            
+            <button type="submit">Soumettre la demande</button>
+        </form>
+        <p id="confirmation" style="display: none; color: green; font-weight: bold;">Votre demande a été envoyée avec succès !</p>
+        <p id="error" style="display: none; color: red; font-weight: bold;">Votre demande n'a pas pu être envoyée :(</p>
+        <a href="/">Retour</a>
+    </div>
+</body>
+</html>

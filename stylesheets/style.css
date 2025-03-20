@@ -1,0 +1,99 @@
+a {
+    text-decoration: none;
+    width: calc(100% - 40px) !important;
+}
+
+a, button {
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+    text-align: center;
+}
+
+button, select {
+    width: 100% !important;
+}
+
+a, button, input, select, textarea {
+    display: block;
+    width: calc(100% - 44px);
+    margin: 20px 0;
+    padding: 12px 20px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+form {
+    text-align: left;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h1, h2 {
+    margin-bottom: 40px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+input, select, textarea {
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button.active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #555;
+    color: #fff;
+    opacity: 0.5;
+}
+
+label {
+    text-align: left;
+    display: block;
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+    width: 100%;
+}
+
+table, th, td {
+    border: 2px solid #aaa;
+    padding: 10px;
+}
+
+th {
+    font-weight: bold;
+}
+
+table td:not(:last-child) {
+    text-transform: uppercase;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    overflow: scroll;
+}
