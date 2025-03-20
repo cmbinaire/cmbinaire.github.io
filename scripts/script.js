@@ -91,7 +91,6 @@ function fetchTrials() {
 }
 
 async function handleFetchSuccess(data) {
-    const userIP = await getUserIP();
     const json = JSON.parse(data.match(/\{.*\}/s)[0]);
     const rows = json.table.rows;
     const tableBody = $("#trialTable").find("tbody");
@@ -126,7 +125,7 @@ async function handleFetchSuccess(data) {
                 `);
 
                 const ipColumn = row.c[7] ? row.c[7].v : "";
-                if (ipColumn.includes("+" + userIP)) {
+                if (ipColumn.includes("+" + getUserID())) {
                     $td.find(".btn-up").addClass("active");
                 }
             } else {
@@ -148,7 +147,6 @@ async function handleFetchSuccess(data) {
 // Vote
 
 async function checkAndMarkVotes() {
-    const userIP = await getUserIP();
     const query = "SELECT G, H";
     const url = `https://docs.google.com/spreadsheets/d/1dFnNy_fPp-xiR3kVabNzKukSjG9p8eIF2c-qUupwCnM/gviz/tq?tq=${encodeURIComponent(query)}&tqx=out:json`;
     fetch(url)
@@ -163,7 +161,7 @@ async function checkAndMarkVotes() {
 
                 if (rows[rowIndex]) {
                     const voters = rows[rowIndex].c[1]?.v?.split(",") || [];
-                    if (voters.includes(userIP)) {
+                    if (voters.includes(getUserID())) {
                         $button.addClass("active");
                     }
                 }
@@ -171,10 +169,19 @@ async function checkAndMarkVotes() {
         });
 }
 
-async function getUserIP() {
-    const response = await fetch("https://api.ipify.org?format=json");
-    const data = await response.json();
-    return data.ip;
+function uuidv4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+  );
+}
+
+function getUserID() {
+    let deviceId = localStorage.getItem("deviceId");
+    if (!deviceId) {
+        deviceId = uuidv4();
+        localStorage.setItem("deviceId", deviceId);
+    }
+    return deviceId;
 }
 
 async function handleVote($button) {
@@ -191,7 +198,7 @@ async function handleVote($button) {
     const payload = {
         action: isUndo ? "unvote" : "vote",
         row: $button.data("row") + 1,
-        ip: await getUserIP()
+        ip: getUserID()
     };
 
     fetch(`https://script.google.com/macros/s/AKfycbw5vuvx1ZBE42KdiH2agfo0uv4cc4KdBICz5E0-wvbVa1D6nHWQdO5EO5tG76D6mV7M/exec`, { 
