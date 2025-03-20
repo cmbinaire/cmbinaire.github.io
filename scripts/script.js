@@ -98,59 +98,55 @@ async function handleFetchSuccess(data) {
 
     tableBody.empty();
 
-    // If there are no rows, display "No entries available" message
-    if (rows.length === 0) {
-        tableBody.append("<tr><td colspan='6'>No entries available</td></tr>");
-    } else {
-        // Skip the first row if it's the header
-        rows.forEach((row, rowIndex) => {
-            if (rowIndex === 0) return; // Skip the first row as it's the header
+    rows.forEach((row, rowIndex) => {
+        const columnIValue = row.c[8]?.v;
+        if (columnIValue !== true && columnIValue !== false) {
+            return;
+        }
 
-            let $tr = $("<tr></tr>");
-            row.c.forEach((cell, index) => {
-                let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
-                if (cellValue === true) cellValue = "oui";
-                if (cellValue === false) cellValue = "non";
+        let $tr = $("<tr></tr>");
+        row.c.forEach((cell, index) => {
+            let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
+            if (cellValue === true) cellValue = "oui";
+            if (cellValue === false) cellValue = "non";
 
-                if (index === 1) {
-                    const nextCellValue = row.c[index + 1] ? row.c[index + 1].v : "";
-                    cellValue = `${cellValue}<br><br>vs.<br><br>${nextCellValue}`;
-                } else if (index === 2 || index === 4) {
-                    return;
-                } else if (index === 3 && row.c[index + 1].v === true) {
-                    cellValue = `${cellValue}<br><br>(AVEC JURY)`;
+            if (index === 1) {
+                const nextCellValue = row.c[index + 1] ? row.c[index + 1].v : "";
+                cellValue = `${cellValue}<br><br>vs.<br><br>${nextCellValue}`;
+            } else if (index === 2 || index === 4) {
+                return;
+            } else if (index === 3 && row.c[index + 1].v === true) {
+                cellValue = `${cellValue}<br><br>(AVEC JURY)`;
+            }
+
+            let $td = $("<td></td>");
+
+            if (index === 0) {
+                $td.html(`
+                    <div>
+                        <button class="btn-up" data-row="${rowIndex}" data-index="${index}" delta="1">▲</button>
+                        <span class="value">${cellValue}</span>
+                        <br><br><br>
+                    </div>
+                `);
+
+                const ipColumn = row.c[7] ? row.c[7].v : "";
+                if (ipColumn.includes("+" + userIP)) {
+                    $td.find(".btn-up").addClass("active");
                 }
+            } else {
+                $td.html(cellValue);
+            }
 
-                let $td = $("<td></td>");
-
-                if (index === 0) {
-                    $td.html(`
-                        <div>
-                            <button class="btn-up" data-row="${rowIndex}" data-index="${index}" delta="1">▲</button>
-                            <span class="value">${cellValue}</span>
-                            <br><br><br>
-                        </div>
-                    `);
-
-                    const ipColumn = row.c[7] ? row.c[7].v : "";
-                    if (ipColumn.includes("+" + userIP)) {
-                        $td.find(".btn-up").addClass("active");
-                    }
-                } else {
-                    $td.html(cellValue);
-                }
-
-                $tr.append($td);
-            });
-            tableBody.append($tr);
+            $tr.append($td);
         });
-    }
+        tableBody.append($tr);
+    });
 
     $(".btn-up").on("click", function () {
         handleVote($(this));
     });
 }
-
 
 
 
