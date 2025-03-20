@@ -98,10 +98,14 @@ async function handleFetchSuccess(data) {
 
     tableBody.empty();
 
+    // If there are no rows, display "No entries available" message
     if (rows.length === 0) {
         tableBody.append("<tr><td colspan='6'>No entries available</td></tr>");
     } else {
+        // Skip the first row if it's the header
         rows.forEach((row, rowIndex) => {
+            if (rowIndex === 0) return; // Skip the first row as it's the header
+
             let $tr = $("<tr></tr>");
             row.c.forEach((cell, index) => {
                 let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
@@ -146,6 +150,7 @@ async function handleFetchSuccess(data) {
         handleVote($(this));
     });
 }
+
 
 
 
