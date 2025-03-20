@@ -47,6 +47,7 @@ function updateTitleStyle() {
 
 function collectFormData() {
     return {
+        action:         "add",
         defense:        $("#defense").val(),
         prosecution:    $("#prosecution").val(),
         judge:          $("#judge").val(),
@@ -151,7 +152,6 @@ async function checkAndMarkVotes() {
     const userIP = await getUserIP();
     const query = "SELECT G, H";
     const url = `https://docs.google.com/spreadsheets/d/1dFnNy_fPp-xiR3kVabNzKukSjG9p8eIF2c-qUupwCnM/gviz/tq?tq=${encodeURIComponent(query)}&tqx=out:json`;
-    console.log(url);
     fetch(url)
         .then(response => response.text())
         .then(text => {
@@ -162,12 +162,9 @@ async function checkAndMarkVotes() {
                 const $button = $(this);
                 const rowIndex = $button.data("row");
 
-                console.log(rows[rowIndex]);
                 if (rows[rowIndex]) {
                     const voters = rows[rowIndex].c[1]?.v?.split(",") || [];
-                    console.log(voters);
                     if (voters.includes(userIP)) {
-                        console.log("Voted");
                         $button.addClass("active");
                     }
                 }
