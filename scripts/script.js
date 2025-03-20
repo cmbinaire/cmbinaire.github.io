@@ -99,6 +99,7 @@ async function handleFetchSuccess(data) {
 
     rows.forEach((row, rowIndex) => {
         let $tr = $("<tr></tr>");
+        if (rowIndex === 1) return;
         row.c.forEach((cell, index) => {
             let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
             if (cellValue === true) cellValue = "oui";
