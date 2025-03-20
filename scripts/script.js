@@ -99,11 +99,6 @@ async function handleFetchSuccess(data) {
     tableBody.empty();
 
     rows.forEach((row, rowIndex) => {
-        const columnIValue = row.c[8]?.v;
-        if (columnIValue !== true && columnIValue !== false) {
-            return;
-        }
-
         let $tr = $("<tr></tr>");
         row.c.forEach((cell, index) => {
             let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
