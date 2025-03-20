@@ -98,45 +98,49 @@ async function handleFetchSuccess(data) {
 
     tableBody.empty();
 
-    rows.forEach((row, rowIndex) => {
-        let $tr = $("<tr></tr>");
-        row.c.forEach((cell, index) => {
-            let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
-            if (cellValue === true) cellValue = "oui";
-            if (cellValue === false) cellValue = "non";
+    if (rows.length === 0) {
+        tableBody.append("<tr><td colspan='6'>No entries available</td></tr>");
+    } else {
+        rows.forEach((row, rowIndex) => {
+            let $tr = $("<tr></tr>");
+            row.c.forEach((cell, index) => {
+                let cellValue = cell !== null && cell.v !== undefined ? cell.v : "";
+                if (cellValue === true) cellValue = "oui";
+                if (cellValue === false) cellValue = "non";
 
-            if (index === 1) {
-                const nextCellValue = row.c[index + 1] ? row.c[index + 1].v : "";
-                cellValue = `${cellValue}<br><br>vs.<br><br>${nextCellValue}`;
-            } else if (index === 2 || index === 4) {
-                return;
-            } else if (index === 3 && row.c[index + 1].v === true) {
-                cellValue = `${cellValue}<br><br>(AVEC JURY)`;
-            }
-
-            let $td = $("<td></td>");
-
-            if (index === 0) {
-                $td.html(`
-                    <div>
-                        <button class="btn-up" data-row="${rowIndex}" data-index="${index}" delta="1">▲</button>
-                        <span class="value">${cellValue}</span>
-                        <br><br><br>
-                    </div>
-                `);
-
-                const ipColumn = row.c[7] ? row.c[7].v : "";
-                if (ipColumn.includes("+" + userIP)) {
-                    $td.find(".btn-up").addClass("active");
+                if (index === 1) {
+                    const nextCellValue = row.c[index + 1] ? row.c[index + 1].v : "";
+                    cellValue = `${cellValue}<br><br>vs.<br><br>${nextCellValue}`;
+                } else if (index === 2 || index === 4) {
+                    return;
+                } else if (index === 3 && row.c[index + 1].v === true) {
+                    cellValue = `${cellValue}<br><br>(AVEC JURY)`;
                 }
-            } else {
-                $td.html(cellValue);
-            }
 
-            $tr.append($td);
+                let $td = $("<td></td>");
+
+                if (index === 0) {
+                    $td.html(`
+                        <div>
+                            <button class="btn-up" data-row="${rowIndex}" data-index="${index}" delta="1">▲</button>
+                            <span class="value">${cellValue}</span>
+                            <br><br><br>
+                        </div>
+                    `);
+
+                    const ipColumn = row.c[7] ? row.c[7].v : "";
+                    if (ipColumn.includes("+" + userIP)) {
+                        $td.find(".btn-up").addClass("active");
+                    }
+                } else {
+                    $td.html(cellValue);
+                }
+
+                $tr.append($td);
+            });
+            tableBody.append($tr);
         });
-        tableBody.append($tr);
-    });
+    }
 
     $(".btn-up").on("click", function () {
         handleVote($(this));
