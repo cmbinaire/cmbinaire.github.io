@@ -190,7 +190,7 @@ async function handleVote($button) {
 
     const payload = {
         action: isUndo ? "unvote" : "vote",
-        row: $button.data("row") + 2,
+        row: $button.data("row") + 1,
         ip: await getUserIP()
     };
 
