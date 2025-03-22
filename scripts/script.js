@@ -57,6 +57,7 @@ function collectFormData() {
 }
 
 function submitFormData(formData) {
+    $("button").prop("disabled", true);
     fetch("https://script.google.com/macros/s/AKfycbw5vuvx1ZBE42KdiH2agfo0uv4cc4KdBICz5E0-wvbVa1D6nHWQdO5EO5tG76D6mV7M/exec", { 
         method: "POST",
         mode: "no-cors",
@@ -70,11 +71,13 @@ function submitFormData(formData) {
 function handleSubmitError() {
     $("#trialForm").hide();
     $("#error").show();
+    $("button").prop("disabled", false);
 }
 
 function handleSubmitSuccess() {
     $("#trialForm").hide();
     $("#confirmation").show();
+    $("button").prop("disabled", false);
 }
 
 
