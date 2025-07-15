@@ -20,12 +20,12 @@ $(document).ready(function () {
 
 function chooseRandomStylesheet() {
     const stylesheets = [
-        "/stylesheets/style-cute.css",
-        "/stylesheets/style-cyberpunk.css",
-        "/stylesheets/style-funky.css",
-        "/stylesheets/style-minimal.css",
-        "/stylesheets/style-neon.css",
-        "/stylesheets/style-vintage.css"
+        "/cocktail-molotov-buvable/stylesheets/style-cute.css",
+        "/cocktail-molotov-buvable/stylesheets/style-cyberpunk.css",
+        "/cocktail-molotov-buvable/stylesheets/style-funky.css",
+        "/cocktail-molotov-buvable/stylesheets/style-minimal.css",
+        "/cocktail-molotov-buvable/stylesheets/style-neon.css",
+        "/cocktail-molotov-buvable/stylesheets/style-vintage.css"
     ];
     const randomStylesheet = stylesheets[Math.floor(Math.random() * stylesheets.length)];
     $("#dynamic-stylesheet").attr("href", randomStylesheet);
